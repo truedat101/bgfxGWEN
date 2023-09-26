@@ -18,7 +18,7 @@ configurations {
 	}
 
 	platforms {
-		"x64"
+		"x32"
 	}
 
 	language "C++"
