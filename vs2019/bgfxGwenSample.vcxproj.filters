@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sample">
+      <UniqueIdentifier>{E72994D0-D3CB-BEA6-BC86-D2FAA8C745F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx">
+      <UniqueIdentifier>{6C90947C-58C7-950D-01B4-7B10EDC9110F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples">
+      <UniqueIdentifier>{9A178221-06D8-FD57-CF12-47D53B924234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common">
+      <UniqueIdentifier>{B267F235-9EF6-7BFF-4715-90FA33838CA5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\debugdraw">
+      <UniqueIdentifier>{966B92D8-8291-5C3F-6BD7-E10A579C810B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\entry">
+      <UniqueIdentifier>{F353E60C-DF63-92DD-481D-F7FB344C8176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\font">
+      <UniqueIdentifier>{185C4DA3-841E-812D-CDCE-0FBA39D0590B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\imgui">
+      <UniqueIdentifier>{9CF22D0D-8802-DADD-F1BB-3EFCDDEAC876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\nanovg">
+      <UniqueIdentifier>{6AAAC0BD-D6B7-EEA3-5F9E-EA8ECBAABA5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgfx\examples\common\ps">
+      <UniqueIdentifier>{44798F01-B0B0-D798-B9BA-3BBC2571FE91}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\aviwriter.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\bgfx_utils.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\camera.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\common.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\cube_atlas.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\debugdraw.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\fs_debugdraw_fill.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\fs_debugdraw_fill_lit.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\fs_debugdraw_fill_texture.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\fs_debugdraw_lines.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\fs_debugdraw_lines_stipple.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_fill.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_fill_lit.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_fill_lit_mesh.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_fill_mesh.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_fill_texture.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_lines.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\debugdraw\vs_debugdraw_lines_stipple.bin.h">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\cmd.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\dbg.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\dialog.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\entry.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\entry_p.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\entry\input.h">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\font_manager.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_basic.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_drop_shadow.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_drop_shadow_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_outline.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_outline_drop_shadow_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_outline_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\fs_font_distance_field_subpixel.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\text_buffer_manager.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\text_metrics.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\utf8.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_basic.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_drop_shadow.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_drop_shadow_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_outline.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_outline_drop_shadow_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_outline_image.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\font\vs_font_distance_field_subpixel.bin.h">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\droidsans.ttf.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\fs_imgui_image.bin.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\fs_ocornut_imgui.bin.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\icons_font_awesome.ttf.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\icons_kenney.ttf.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\imgui.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\roboto_regular.ttf.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\robotomono_regular.ttf.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\vs_imgui_image.bin.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\imgui\vs_ocornut_imgui.bin.h">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\nanovg\fontstash.h">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\nanovg\fs_nanovg_fill.bin.h">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\nanovg\nanovg.h">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\nanovg\nanovg_bgfx.h">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\nanovg\vs_nanovg_fill.bin.h">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\packrect.h">
+      <Filter>bgfx\examples\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\ps\fs_particle.bin.h">
+      <Filter>bgfx\examples\common\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\ps\particle_system.h">
+      <Filter>bgfx\examples\common\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\bgfx\examples\common\ps\vs_particle.bin.h">
+      <Filter>bgfx\examples\common\ps</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\bgfx_utils.cpp">
+      <Filter>bgfx\examples\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\camera.cpp">
+      <Filter>bgfx\examples\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\cube_atlas.cpp">
+      <Filter>bgfx\examples\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\debugdraw\debugdraw.cpp">
+      <Filter>bgfx\examples\common\debugdraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\cmd.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\dialog.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_android.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_glfw.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_html5.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_noop.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_sdl.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_windows.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\entry_x11.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\entry\input.cpp">
+      <Filter>bgfx\examples\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\example-glue.cpp">
+      <Filter>bgfx\examples\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\font\font_manager.cpp">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\font\text_buffer_manager.cpp">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\font\text_metrics.cpp">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\font\utf8.cpp">
+      <Filter>bgfx\examples\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\imgui\imgui.cpp">
+      <Filter>bgfx\examples\common\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\nanovg\nanovg.cpp">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\nanovg\nanovg_bgfx.cpp">
+      <Filter>bgfx\examples\common\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\bgfx\examples\common\ps\particle_system.cpp">
+      <Filter>bgfx\examples\common\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sample\bgfxSample.cpp">
+      <Filter>Sample</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
