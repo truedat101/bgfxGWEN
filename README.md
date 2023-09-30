@@ -27,6 +27,12 @@ That said, a bunch of flags are not valid.  This doesn't seem well maintained in
 
 The strategy to fix things is to switch this project to use cmake, and port forward all references to bgfx to use modern 10 years older BGFX.
 
+```
+cd build
+cmake .. -DGWEN_HOME=PATH_TO_GWEN
+make
+```
+
 ## Running
 
 TODO

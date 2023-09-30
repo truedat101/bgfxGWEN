@@ -51,10 +51,13 @@ list(APPEND libs
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/Render
     include
-    ../bgfx/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../bx/include
+    ${GWEN_HOME}/include
 )
 # Library
 add_library(bgfxGWEN SHARED ${SRC_FILES})
+target_compile_definitions(bgfxGWEN PRIVATE BX_CONFIG_DEBUG=0)
 target_link_libraries(bgfxGWEN ${libs})
 
 # Samples
