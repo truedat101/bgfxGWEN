@@ -59,17 +59,17 @@ namespace Gwen
 
             // Load vertex shader.
             const bgfx::Memory* mem;
-	        mem = loadShader("vs_gwen_flat");
+	        mem = loadShaderMem("vs_gwen_flat");
 	        bgfx::ShaderHandle vs_gwen_flat = bgfx::createShader(mem);
 
-			mem = loadShader("vs_gwen_textured");
+			mem = loadShaderMem("vs_gwen_textured");
 	        bgfx::ShaderHandle vs_gwen_textured = bgfx::createShader(mem);
 
 	        // Load fragment shader.
-	        mem = loadShader("fs_gwen_flat");
+	        mem = loadShaderMem("fs_gwen_flat");
 	        bgfx::ShaderHandle fs_gwen_flat = bgfx::createShader(mem);
 
-            mem = loadShader("fs_gwen_textured");
+            mem = loadShaderMem("fs_gwen_textured");
 	        bgfx::ShaderHandle fs_gwen_textured = bgfx::createShader(mem);
 
 			//bgfx::UniformHandle u_color0 = bgfx::createUniform("u_color0", bgfx::UniformType::Uniform4fv);
@@ -207,7 +207,19 @@ namespace Gwen
             //TODO support non DDS files
 
             bgfx::TextureInfo info;
-	        bgfx::TextureHandle handle = bgfx::createTexture(mem, 0, &info);
+			// void* createTexture(TextureHandle /*_handle*/, const Memory* /*_mem*/, uint64_t /*_flags*/, uint8_t /*_skip*/) override
+			// TextureHandle bgfx::createTexture(const Memory *_mem, uint64_t _flags = BGFX_TEXTURE_NONE | BGFX_SAMPLER_NONE, uint8_t _skip = 0, TextureInfo *_info = NULL)¶
+	        // rci->createTexture(_handle, mem, _flags, 0);
+			/*
+			TextureHandle createTexture(
+				const Memory* _mem
+				, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
+				, uint8_t _skip = 0
+				, TextureInfo* _info = NULL
+				);
+			*/
+			// bgfx::TextureHandle handle = bgfx::createTexture(mem, 0, &info);
+			bgfx::TextureHandle handle = bgfx::createTexture(mem, 0, 0, &info);
             memcpy(&pTexture->data, &handle, 2);
 
             pTexture->width = info.width;
@@ -218,7 +230,7 @@ namespace Gwen
 		{
             bgfx::TextureHandle handle;
             memcpy(&handle, &pTexture->data, 2);
-            bgfx::destroyTexture(handle);
+            bgfx::destroy(handle);
             pTexture->data = NULL;
 		}
 
@@ -432,7 +444,8 @@ namespace Gwen
 
 	        // Set view 0 clear state.
 	        bgfx::setViewClear(0
-		        , BGFX_CLEAR_COLOR_BIT|BGFX_CLEAR_DEPTH_BIT
+		    //     , BGFX_CLEAR_COLOR_BIT|BGFX_CLEAR_DEPTH_BIT
+			    , BGFX_CLEAR_COLOR|BGFX_CLEAR_DEPTH
 		        , 0x303030ff
 		        , 1.0f
 		        , 0
@@ -499,8 +512,13 @@ namespace Gwen
 
 		    // This dummy draw call is here to make sure that view 0 is cleared
 		    // if no other draw calls are submitted to view 0.
-		    bgfx::submit(0);
-
+		    // bgfx::submit(0);
+			/*
+			bgfx::ProgramHandle m_flatProgram;
+            bgfx::ProgramHandle m_texturedProgram;
+			*/
+			// ??? is this correct?
+			bgfx::submit(0, m_flatProgram);
 			return true;
 		}
 
@@ -520,7 +538,7 @@ namespace Gwen
 		{
 			if ( m_verticesCount > 0 )
 			{
-                if (bgfx::checkAvailTransientVertexBuffer(m_verticesCount, m_posDecl))
+                if (bgfx::getAvailTransientVertexBuffer(m_verticesCount, m_posDecl))
 	            {
                     bgfx::TransientVertexBuffer tvb;
 		            bgfx::allocTransientVertexBuffer(&tvb, m_verticesCount, m_posDecl);
@@ -528,12 +546,15 @@ namespace Gwen
 					memcpy(tvb.data, m_vertices, m_verticesCount * sizeof(PosVF));
                     if(m_currentTexture.idx != bgfx::kInvalidHandle){
                         //bgfx::createProgram(m_texturedProgram);
-						bgfx::createProgram(m_flatProgram);
+						// XXX This needs a review
+						m_flatProgram = bgfx::createProgram(loadShader("vs_gwen_flat"), true);
                     }else{
-                        bgfx::createProgram(m_flatProgram);
+						// XXX This needs a review
+						m_flatProgram = bgfx::createProgram(loadShader("vs_gwen_flat"), true);
+                        // bgfx::createProgram(m_flatProgram);
                     }
 				    // Set vertex and index buffer.                    
-				    bgfx::setVertexBuffer(&tvb, m_verticesCount);
+				    bgfx::setBuffer(&tvb, m_verticesCount);
 				    //bgfx::setIndexBuffer(ibh);
                     bgfx::submit((uint8_t) m_viewID, m_depth--);
 	            }else
@@ -579,7 +600,7 @@ namespace Gwen
 			m_verticesCount++;
 		}   
 
-        const bgfx::Memory* bgfxRenderer::loadShader(const char* _name)
+        const bgfx::Memory* bgfxRenderer::loadShaderMem(const char* _name)
         {
              char filePath[512];
              strcpy(filePath, m_shaderPath);
@@ -587,6 +608,49 @@ namespace Gwen
 			 strcat(filePath, ".bin");
 	        return load(filePath);
         }
+
+		// These are borrowed from bgfx examples common bgfx_utils.cpp
+		const bgfx::ShaderHandle loadShader(bx::FileReaderI* _reader, const char* _name)
+		{
+			char filePath[512];
+
+			const char* shaderPath = "???";
+
+			switch (bgfx::getRendererType() )
+			{
+			case bgfx::RendererType::Noop:
+			case bgfx::RendererType::Direct3D9:  shaderPath = "shaders/dx9/";   break;
+			case bgfx::RendererType::Direct3D11:
+			case bgfx::RendererType::Direct3D12: shaderPath = "shaders/dx11/";  break;
+			case bgfx::RendererType::Agc:
+			case bgfx::RendererType::Gnm:        shaderPath = "shaders/pssl/";  break;
+			case bgfx::RendererType::Metal:      shaderPath = "shaders/metal/"; break;
+			case bgfx::RendererType::Nvn:        shaderPath = "shaders/nvn/";   break;
+			case bgfx::RendererType::OpenGL:     shaderPath = "shaders/glsl/";  break;
+			case bgfx::RendererType::OpenGLES:   shaderPath = "shaders/essl/";  break;
+			case bgfx::RendererType::Vulkan:     shaderPath = "shaders/spirv/"; break;
+			case bgfx::RendererType::WebGPU:     shaderPath = "shaders/spirv/"; break;
+
+			case bgfx::RendererType::Count:
+				BX_ASSERT(false, "You should not be here!");
+				break;
+			}
+
+			bx::strCopy(filePath, BX_COUNTOF(filePath), shaderPath);
+			bx::strCat(filePath, BX_COUNTOF(filePath), _name);
+			bx::strCat(filePath, BX_COUNTOF(filePath), ".bin");
+
+			bgfx::ShaderHandle handle = bgfx::createShader(loadMem(_reader, filePath) );
+			bgfx::setName(handle, _name);
+
+			return handle;
+		}
+
+		// These are borrowed from bgfx examples common bgfx_utils.cpp
+		bgfx::ShaderHandle loadShader(const char* _name)
+		{
+			return loadShader(entry::getFileReader(), _name);
+		}
 
         const bgfx::Memory* bgfxRenderer::loadTexture(const char* _name)
         {

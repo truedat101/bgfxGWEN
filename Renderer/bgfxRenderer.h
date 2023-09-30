@@ -6,6 +6,7 @@
 #include <bgfx/bgfx.h>
 #include <bx/bx.h>
 #include <bx/timer.h>
+#include <bx/file.h>
 /*
 #include "../common/entry.h"
 #include "../common/dbg.h"
@@ -100,9 +101,11 @@ namespace Gwen
 				void AddVert( int x, int y );
 				void AddVert( int x, int y, float u, float v );
 
-                const bgfx::Memory* loadShader(const char* _name);
+                const bgfx::Memory* loadShaderMem(const char* _name);
                 const bgfx::Memory* loadTexture(const char* _name);
-                const char* m_shaderPath;
+				const bgfx::ShaderHandle loadShader(bx::FileReaderI* _reader, const char* _name);
+                const bgfx::ShaderHandle loadShader(const char* _name);
+				const char* m_shaderPath;
                 const char* m_texturePath;
 
                 //TODO
