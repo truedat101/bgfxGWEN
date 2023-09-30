@@ -55,22 +55,22 @@ namespace Gwen
             m_verticesCount = 0;
             m_width = 1280;
 	        m_height = 720;
-            m_currentTexture.idx = bgfx::invalidHandle;           
+            m_currentTexture.idx = BGFX_INVALID_HANDLE;// bgfx::kInvalidHandle;           
 
             // Load vertex shader.
             const bgfx::Memory* mem;
 	        mem = loadShader("vs_gwen_flat");
-	        bgfx::VertexShaderHandle vs_gwen_flat = bgfx::createVertexShader(mem);
+	        bgfx::ShaderHandle vs_gwen_flat = bgfx::createShader(mem);
 
 			mem = loadShader("vs_gwen_textured");
-	        bgfx::VertexShaderHandle vs_gwen_textured = bgfx::createVertexShader(mem);
+	        bgfx::ShaderHandle vs_gwen_textured = bgfx::createShader(mem);
 
 	        // Load fragment shader.
 	        mem = loadShader("fs_gwen_flat");
-	        bgfx::FragmentShaderHandle fs_gwen_flat = bgfx::createFragmentShader(mem);
+	        bgfx::ShaderHandle fs_gwen_flat = bgfx::createShader(mem);
 
             mem = loadShader("fs_gwen_textured");
-	        bgfx::FragmentShaderHandle fs_gwen_textured = bgfx::createFragmentShader(mem);
+	        bgfx::ShaderHandle fs_gwen_textured = bgfx::createShader(mem);
 
 			//bgfx::UniformHandle u_color0 = bgfx::createUniform("u_color0", bgfx::UniformType::Uniform4fv);
             
@@ -82,10 +82,10 @@ namespace Gwen
 	        // their reference is kept inside bgfx after calling createProgram.
 	        // Vertex and fragment shader will be destroyed once program is
 	        // destroyed.
-            bgfx::destroyVertexShader(vs_gwen_flat);
-			bgfx::destroyVertexShader(vs_gwen_textured);
-	        bgfx::destroyFragmentShader(fs_gwen_flat);
-            bgfx::destroyFragmentShader(fs_gwen_textured);
+            bgfx::destroy(vs_gwen_flat);
+			bgfx::destroy(vs_gwen_textured);
+	        bgfx::destroy(fs_gwen_flat);
+            bgfx::destroy(fs_gwen_textured);
 
             //declare vertex format
             m_posUVColorDecl.begin();
@@ -102,8 +102,8 @@ namespace Gwen
 
 		bgfxRenderer::~bgfxRenderer()
 		{
-            bgfx::destroyProgram(m_flatProgram);
-            bgfx::destroyProgram(m_texturedProgram);
+            bgfx::destroy(m_flatProgram);
+            bgfx::destroy(m_texturedProgram);
 		}
 
         void bgfxRenderer::Init()
@@ -114,10 +114,10 @@ namespace Gwen
 		{
             bgfx::setViewRect(0, 0, 0, m_width, m_height);         
 			bgfx::setState( 
-				BGFX_STATE_RGB_WRITE
+				BGFX_STATE_DEFAULT // BGFX_STATE_RGB_WRITE
 				|BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
 				//|BGFX_STATE_ALPHA_TEST
-				|BGFX_STATE_DEPTH_WRITE
+				// |BGFX_STATE_DEPTH_WRITE
 				|BGFX_STATE_DEPTH_TEST_LESS
 				);
 
@@ -149,10 +149,10 @@ namespace Gwen
 
 		void bgfxRenderer::DrawFilledRect( Gwen::Rect rect )
 		{
-			if ( m_currentTexture.idx != bgfx::invalidHandle )
+			if ( m_currentTexture.idx != bgfx::kInvalidHandle )
 			{
 				Flush();
-				m_currentTexture.idx = bgfx::invalidHandle;
+				m_currentTexture.idx = bgfx::kInvalidHandle;
 			}
 
 			//m_color = rand() | 0x44000044;
@@ -225,17 +225,17 @@ namespace Gwen
 		void bgfxRenderer::DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect rect, float u1, float v1, float u2, float v2 )
 		{
 
-            if ( m_currentTexture.idx != bgfx::invalidHandle )
+            if ( m_currentTexture.idx != bgfx::kInvalidHandle )
 			{
 				Flush();
-				m_currentTexture.idx = bgfx::invalidHandle;
+				m_currentTexture.idx = bgfx::kInvalidHandle;
 			}
 
             bgfx::TextureHandle handle;
             memcpy(&handle, &pTexture->data, 2);
 
             // Missing image, not loaded properly?
-            if(handle.idx == bgfx::invalidHandle)
+            if(handle.idx == bgfx::kInvalidHandle)
             {
                 return DrawMissingImage( rect );
             }
@@ -482,7 +482,7 @@ namespace Gwen
 		{
             
             // Force setting the current texture again
-            m_currentTexture.idx = bgfx::invalidHandle;
+            m_currentTexture.idx = bgfx::kInvalidHandle;
 
             // Free any unmanaged resources (fonts) ??
 			//Release();
@@ -526,11 +526,11 @@ namespace Gwen
 		            bgfx::allocTransientVertexBuffer(&tvb, m_verticesCount, m_posDecl);
 
 					memcpy(tvb.data, m_vertices, m_verticesCount * sizeof(PosVF));
-                    if(m_currentTexture.idx != bgfx::invalidHandle){
-                        //bgfx::setProgram(m_texturedProgram);
-						bgfx::setProgram(m_flatProgram);
+                    if(m_currentTexture.idx != bgfx::kInvalidHandle){
+                        //bgfx::createProgram(m_texturedProgram);
+						bgfx::createProgram(m_flatProgram);
                     }else{
-                        bgfx::setProgram(m_flatProgram);
+                        bgfx::createProgram(m_flatProgram);
                     }
 				    // Set vertex and index buffer.                    
 				    bgfx::setVertexBuffer(&tvb, m_verticesCount);

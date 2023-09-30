@@ -262,7 +262,7 @@ int _main_(int _argc, char** _argv)
 	stash.updateRegion(rect, &buffer[0]);
 	
 	// Create vertex stream declaration.
-	bgfx::VertexDecl vertexDecl;
+	bgfx::VertexLayout vertexDecl;
 	vertexDecl.begin();
 		vertexDecl.add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float);
 		vertexDecl.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float);
@@ -285,11 +285,11 @@ int _main_(int _argc, char** _argv)
 
 	// Load vertex shader.
 	mem = loadShader("vs_font_basic");
-	bgfx::VertexShaderHandle vsh = bgfx::createVertexShader(mem);
+	bgfx::ShaderHandle vsh = bgfx::createShader(mem);
 
 	// Load fragment shader.
 	mem = loadShader("fs_font_basic");
-	bgfx::FragmentShaderHandle fsh = bgfx::createFragmentShader(mem);
+	bgfx::ShaderHandle fsh = bgfx::createShader(mem);
 
 	// Create program from shaders.
 	bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh);
@@ -298,8 +298,8 @@ int _main_(int _argc, char** _argv)
 	// their reference is kept inside bgfx after calling createProgram.
 	// Vertex and fragment shader will be destroyed once program is^
 	// destroyed.
-	bgfx::destroyVertexShader(vsh);
-	bgfx::destroyFragmentShader(fsh);
+	bgfx::destroy(vsh);
+	bgfx::destroy(fsh);
 	
 
     //void bakeGlyphAlpha(uint32_t codePoint, float size, uint8_t* outBuffer);
@@ -334,7 +334,7 @@ int _main_(int _argc, char** _argv)
 		//bgfx::setUniform(u_color0, color);
 
 		// Set vertex and fragment shaders.
-		bgfx::setProgram(program);
+		bgfx::createProgram(program);
 
 		// Set vertex and index buffer.
 		bgfx::setVertexBuffer(vbh);
@@ -369,7 +369,7 @@ int _main_(int _argc, char** _argv)
 	delete font;
     delete text_provider;
 	
-	bgfx::destroyProgram(program);
+	bgfx::destroy(program);
 
 	// Shutdown bgfx.
     bgfx::shutdown();

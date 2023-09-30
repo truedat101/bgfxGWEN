@@ -3,7 +3,7 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
 
-#include <bgfx.h>
+#include <bgfx/bgfx.h>
 #include <bx/bx.h>
 #include <bx/timer.h>
 /*
@@ -85,8 +85,8 @@ namespace Gwen
                 int m_viewID;                
                 //bgfx::DynamicVertexBufferHandle m_vertexBufferHandle;
                 //bgfx::DynamicIndexBufferHandle m_indexBufferHandle;
-				bgfx::VertexDecl m_posDecl;
-                bgfx::VertexDecl m_posUVColorDecl;
+				bgfx::VertexLayout m_posDecl;
+                bgfx::VertexLayout m_posUVColorDecl;
                 bgfx::ProgramHandle m_flatProgram;
                 bgfx::ProgramHandle m_texturedProgram;
 
