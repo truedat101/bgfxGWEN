@@ -4,7 +4,7 @@
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
 #include "Gwen/WindowProvider.h"
-
+#include "entry/entry.h"
 /*
 #define D3DFVF_VERTEXFORMAT2D ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
@@ -554,9 +554,14 @@ namespace Gwen
                         // bgfx::createProgram(m_flatProgram);
                     }
 				    // Set vertex and index buffer.                    
-				    bgfx::setBuffer(&tvb, m_verticesCount);
+				    // bgfx::setVertexBuffer(&tvb, m_verticesCount);
+					// XXX Need to review what the right method signature is
+					bgfx::setVertexBuffer(0, &tvb, 0, m_verticesCount);
+			
 				    //bgfx::setIndexBuffer(ibh);
-                    bgfx::submit((uint8_t) m_viewID, m_depth--);
+                    // bgfx::submit((uint8_t) m_viewID, m_depth--);
+					// void bgfx::submit(ViewId _id, ProgramHandle _program, uint32_t _depth = 0, uint8_t _flags = BGFX_DISCARD_ALL)¶
+					bgfx::submit(m_viewID, m_flatProgram, m_depth--);
 	            }else
                 {
                     //assert(false
@@ -608,6 +613,47 @@ namespace Gwen
 			 strcat(filePath, ".bin");
 	        return load(filePath);
         }
+
+
+		const bgfx::Memory* loadMem(bx::FileReaderI* _reader, const char* _filePath)
+		{
+			if (bx::open(_reader, _filePath) )
+			{
+				uint32_t size = (uint32_t)bx::getSize(_reader);
+				const bgfx::Memory* mem = bgfx::alloc(size+1);
+				bx::read(_reader, mem->data, size, bx::ErrorAssert{});
+				bx::close(_reader);
+				mem->data[mem->size-1] = '\0';
+				return mem;
+			}
+
+			// XXX? where is this DBG
+			// DBG("Failed to load %s.", _filePath);
+			return NULL;
+		}
+
+		// These are borrowed from bgfx examples common bgfx_utils.cpp
+		const void* loadMem(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size)
+		{
+			if (bx::open(_reader, _filePath) )
+			{
+				uint32_t size = (uint32_t)bx::getSize(_reader);
+				void* data = bx::alloc(_allocator, size);
+				bx::read(_reader, data, size, bx::ErrorAssert{});
+				bx::close(_reader);
+
+				if (NULL != _size)
+				{
+					*_size = size;
+				}
+				return data;
+			}
+
+			// XXX where is DBG from
+			// DBG("Failed to load %s.", _filePath);
+			return NULL;
+		}
+
 
 		// These are borrowed from bgfx examples common bgfx_utils.cpp
 		const bgfx::ShaderHandle loadShader(bx::FileReaderI* _reader, const char* _name)

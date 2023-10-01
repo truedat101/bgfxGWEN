@@ -103,6 +103,8 @@ namespace Gwen
 
                 const bgfx::Memory* loadShaderMem(const char* _name);
                 const bgfx::Memory* loadTexture(const char* _name);
+				const bgfx::Memory* loadMem(bx::FileReaderI* _reader, const char* _filePath);
+				const void* loadMem(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size);
 				const bgfx::ShaderHandle loadShader(bx::FileReaderI* _reader, const char* _name);
                 const bgfx::ShaderHandle loadShader(const char* _name);
 				const char* m_shaderPath;

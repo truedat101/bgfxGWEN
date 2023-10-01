@@ -363,12 +363,20 @@ int main(int arg, char **argv)
    #define STBTT_iceil(x)    ((int) ceil(x))
    #endif
 
+
+   // XXX This is a dup of the same header in bgfx third party stb
+   // This older one is depricated, borrow the new code
    // #define your own functions "STBTT_malloc" / "STBTT_free" to avoid malloc.h
    #ifndef STBTT_malloc
-   #include <malloc.h>
-   #define STBTT_malloc(x,u)  malloc(x)
-   #define STBTT_free(x,u)    free(x)
+   #include <stdlib.h>
+   #define STBTT_malloc(x,u)  ((void)(u),malloc(x))
+   #define STBTT_free(x,u)    ((void)(u),free(x))
    #endif
+   // #ifndef STBTT_malloc
+   // #include <malloc.h>
+   // #define STBTT_malloc(x,u)  malloc(x)
+   // #define STBTT_free(x,u)    free(x)
+   // #endif
 
    #ifndef STBTT_assert
    #include <assert.h>
