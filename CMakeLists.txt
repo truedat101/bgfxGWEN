@@ -29,23 +29,34 @@ list(APPEND SRC_FILES
     ${CMAKE_CURRENT_LIST_DIR}/Renderer/GlyphStash.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Renderer/RectanglePacker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Renderer/TrueTypeFont.cpp
+    # ENTRY stuff from bgfx common .... can't we just link to the lib?
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/entry.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/cmd.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/input.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/dialog.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/entry_glfw.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common/entry/entry_osx.mm
+    
 )    
 
 list(APPEND libs
     # -licui18n
-    ${GWEN_HOME}/lib/libGWEN.so
-    ../dist/lib/libbgfxRelease.a
-    ./dist/lib/libbimg_decodeRelease.a
-    ./dist/lib/libbimg_encodeRelease.a
-    ./dist/lib/libbimgRelease.a
-    ./dist/lib/libbxRelease.a
-    ./dist/lib/libexample-commonRelease.a
-    ./dist/lib/libexample-glueRelease.a
-    ./dist/lib/libfcppRelease.a  
-    ./dist/lib/libglslangRelease.a
-    ./dist/lib/libglsl-optimizerRelease.a
-    ./dist/lib/libspirv-crossRelease.a
-    ./dist/lib/libspirv-optRelease.a
+    # TODO: figure out a good way to configure
+    # for now just copy to dist/lib manually
+    # ${GWEN_HOME}/lib/libGwen.so
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libGwen.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbgfxRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbimg_decodeRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbimg_encodeRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbimgRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbxRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libexample-commonRelease.a
+    # ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libexample-glueRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libfcppRelease.a  
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libglslangRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libglsl-optimizerRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libspirv-crossRelease.a
+    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libspirv-optRelease.a
 )
 
 include_directories(
@@ -59,6 +70,9 @@ include_directories(
 # Library
 add_library(bgfxGWEN SHARED ${SRC_FILES})
 target_compile_definitions(bgfxGWEN PRIVATE BX_CONFIG_DEBUG=0)
+if (APPLE)
+  set_target_properties(bgfxGWEN PROPERTIES LINK_FLAGS "-framework Metal -framework CoreFoundation -framework CoreGraphics -framework Carbon -framework IOKit -framework AppKit -framework QuartzCore -ObjC")
+endif()
 target_link_libraries(bgfxGWEN ${libs})
 
 # Samples

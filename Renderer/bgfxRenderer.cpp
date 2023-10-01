@@ -4,6 +4,8 @@
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
 #include "Gwen/WindowProvider.h"
+// https://github.com/bkaradzic/bgfx/discussions/2776
+#define ENTRY_CONFIG_IMPLEMENT_MAIN 0
 #include "entry/entry.h"
 /*
 #define D3DFVF_VERTEXFORMAT2D ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
@@ -615,7 +617,7 @@ namespace Gwen
         }
 
 
-		const bgfx::Memory* loadMem(bx::FileReaderI* _reader, const char* _filePath)
+		const bgfx::Memory* bgfxRenderer::loadMem(bx::FileReaderI* _reader, const char* _filePath)
 		{
 			if (bx::open(_reader, _filePath) )
 			{
@@ -633,7 +635,7 @@ namespace Gwen
 		}
 
 		// These are borrowed from bgfx examples common bgfx_utils.cpp
-		const void* loadMem(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size)
+		const void* bgfxRenderer::loadMem(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size)
 		{
 			if (bx::open(_reader, _filePath) )
 			{
@@ -656,7 +658,7 @@ namespace Gwen
 
 
 		// These are borrowed from bgfx examples common bgfx_utils.cpp
-		const bgfx::ShaderHandle loadShader(bx::FileReaderI* _reader, const char* _name)
+		const bgfx::ShaderHandle bgfxRenderer::loadShader(bx::FileReaderI* _reader, const char* _name)
 		{
 			char filePath[512];
 
@@ -693,7 +695,7 @@ namespace Gwen
 		}
 
 		// These are borrowed from bgfx examples common bgfx_utils.cpp
-		bgfx::ShaderHandle loadShader(const char* _name)
+		const bgfx::ShaderHandle bgfxRenderer::loadShader(const char* _name)
 		{
 			return loadShader(entry::getFileReader(), _name);
 		}
