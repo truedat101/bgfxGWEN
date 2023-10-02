@@ -84,7 +84,12 @@ namespace Gwen
 				virtual bool EndContext( Gwen::WindowProvider* pWindow );
 
 			protected:
-                int m_viewID;                
+                int m_viewID;
+				bx::AllocatorI* g_allocator = NULL;
+				bx::FileReaderI* s_fileReader = NULL;
+				bx::FileWriterI* s_fileWriter = NULL;        
+				// static bx::FileReaderI* s_fileReader = NULL;
+				// static bx::FileWriterI* s_fileWriter = NULL;      
                 //bgfx::DynamicVertexBufferHandle m_vertexBufferHandle;
                 //bgfx::DynamicIndexBufferHandle m_indexBufferHandle;
 				bgfx::VertexLayout m_posDecl;

@@ -1,19 +1,26 @@
-#include <bgfx.h>
+#include <bgfx/bgfx.h>
 
 #include <Gwen/Gwen.h>
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Skins/TexturedBase.h>
 #include <Gwen/UnitTest/UnitTest.h>
+#define BX_CONFIG_DEBUG 0
+#if defined(_WIN32)
 #include <Gwen/Input/Windows.h>
+#else
+#define ENTRY_CONFIG_USE_SDL 1
+// #include <Gwen/Input/SDL13.h>
+#endif
+
 
 #include "bgfxRenderer.h"
 
 #include "Gwen/Renderers/OpenGL_DebugFont.h"
 
-#include <common/entry.h>
-#include <common/dbg.h>
-#include <common/math.h>
-#include <common/processevents.h>
+// #include <common/entry.h>
+// #include <common/dbg.h>
+// #include <common/math.h>
+// #include <common/processevents.h>
 
 #include "TrueTypeFont.h"
 #include "GlyphStash.h"
@@ -81,7 +88,8 @@ public:
     {
 		const bgfx::Memory* mem = NULL;// bgfx::alloc(width*height*depth);
 		//memset(mem->data, 0, width*height*depth);
-		uint32_t flags = BGFX_TEXTURE_MIN_POINT|BGFX_TEXTURE_MAG_POINT|BGFX_TEXTURE_U_CLAMP|BGFX_TEXTURE_V_CLAMP;
+		// XXX This needs review
+		uint32_t flags = BGFX_TEXTURE_NONE; // BGFX_TEXTURE_MIN_POINT|BGFX_TEXTURE_MAG_POINT|BGFX_TEXTURE_U_CLAMP|BGFX_TEXTURE_V_CLAMP;
 		/*
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
@@ -90,14 +98,17 @@ public:
 		*/
 		//uint32_t flags = BGFX_TEXTURE_NONE;
 		if(depth==1)
-			m_handle = bgfx::createTexture2D(width, height, 1, bgfx::TextureFormat::L8, flags, mem);
+			// XXX This needs a review
+			// bgfx::createTexture2D(uint16_t(m_viewState.m_width), uint16_t(m_viewState.m_height), false, 1, bgfx::TextureFormat::BGRA8, BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP | BGFX_TEXTURE_RT),
+			m_handle = bgfx::createTexture2D(width, height, false, 1, bgfx::TextureFormat::RGB8, flags, mem);
 		else
-			m_handle = bgfx::createTexture2D(width, height, 1, bgfx::TextureFormat::BGRA8, flags, mem);		
+			// XXX This needs a review
+			m_handle = bgfx::createTexture2D(width, height, false, 1, bgfx::TextureFormat::BGRA8, flags, mem);		
     }
 
 	~TextureProvider_bgfx()
 	{
-		bgfx::destroyTexture(m_handle);
+		bgfx::destroy(m_handle);
 	}
 
     uint16_t getWidth() { return m_width; }
@@ -121,7 +132,11 @@ public:
 
 
 		memcpy(mem->data, data, rect.w*rect.h*m_depth);
-		bgfx::updateTexture2D(m_handle, 0, rect.x, rect.y, rect.w, rect.h, mem);
+		// XXX This needs a review
+		// bgfx::updateTexture2D(m_handle, 0, rect.x, rect.y, rect.w, rect.h, mem);
+		// void bgfx::updateTexture2D(TextureHandle _handle, uint16_t _layer, uint8_t _mip, uint16_t _x, uint16_t _y, uint16_t _width, uint16_t _height, const Memory *_mem, uint16_t _pitch = UINT16_MAX)¶
+		bgfx::updateTexture2D(m_handle, 0, 0, rect.x, rect.y, rect.w, rect.h, mem, 0);
+		
 		//bgfx::updateTexture2D(m_handle, 0, 0, 0, m_width,m_height, mem);
     }
 
@@ -173,8 +188,9 @@ int _main_(int _argc, char** _argv)
 	bgfx::setDebug(debug);
 
 	// Set view 0 clear state.
+	// XXX This needs review
 	bgfx::setViewClear(0
-		, BGFX_CLEAR_COLOR_BIT|BGFX_CLEAR_DEPTH_BIT
+		, BGFX_CLEAR_NONE// BGFX_CLEAR_COLOR_BIT|BGFX_CLEAR_DEPTH_BIT
 		, 0x303030ff
 		, 1.0f
 		, 0
@@ -197,12 +213,12 @@ int _main_(int _argc, char** _argv)
 		s_shaderPath = "shaders/glsl/";
 		break;
 
-	case bgfx::RendererType::OpenGLES2:
-	case bgfx::RendererType::OpenGLES3:
+	case bgfx::RendererType::OpenGLES:
 		s_shaderPath = "shaders/gles/";
 		break;
 	}
 
+	// XXX TODO: Missing Vulkan, Metal, etc.
 
    
     Gwen::Renderer::bgfxRenderer * pRenderer = new Gwen::Renderer::bgfxRenderer(0,s_shaderPath, "textures/");
@@ -236,7 +252,11 @@ int _main_(int _argc, char** _argv)
 	// Create a Windows Control helper 
 	// (Processes Windows MSG's and fires input at GWEN)
 	//
+	#if defined(_WIN32)
 	Gwen::Input::Windows GwenInput;
+	#else
+	Gwen::Input::SDL13 GwenInput;
+	#endif
 	GwenInput.Initialize( pCanvas );
     
 
@@ -337,7 +357,8 @@ int _main_(int _argc, char** _argv)
 		bgfx::createProgram(program);
 
 		// Set vertex and index buffer.
-		bgfx::setVertexBuffer(vbh);
+		// bgfx::setVertexBuffer(vbh);
+		bgfx::setVertexBuffer(0, vbh);
 		bgfx::setIndexBuffer(ibh);
 
 		bgfx::setTexture(0, u_texColor, text_provider->m_handle);

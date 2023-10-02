@@ -19,7 +19,6 @@ set(CMAKE_REQUIRED_FLAGS -std=c++17)
 
 # find_package(GTest REQUIRED)
 
-
 # include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # # include_directories(${glfw3_INCLUDE_DIRS})
 # include_directories(${CONAN_INCLUDE_DIRS_GLFW})
@@ -50,7 +49,7 @@ list(APPEND libs
     ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbimg_encodeRelease.a
     ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbimgRelease.a
     ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libbxRelease.a
-    ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libexample-commonRelease.a
+    # ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libexample-commonRelease.a
     # ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libexample-glueRelease.a
     ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libfcppRelease.a  
     ${CMAKE_CURRENT_LIST_DIR}/../dist/lib/libglslangRelease.a
@@ -60,7 +59,7 @@ list(APPEND libs
 )
 
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/Render
+    ${CMAKE_SOURCE_DIR}/Renderer
     include
     ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../bgfx/examples/common
@@ -76,18 +75,14 @@ endif()
 target_link_libraries(bgfxGWEN ${libs})
 
 # Samples
-add_executable(bgfxSample.bin ${CMAKE_CURRENT_SOURCE_DIR}/Sample/bgfxSample.cpp)
-target_include_directories(bgfxSample.bin PUBLIC
-  ${CMAKE_CURRENT_BINARY_DIR}
-)
-# target_include_directories(trianglegl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-# set_target_properties(trianglegl
-#     PROPERTIES
-#         PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/include/trianglegl.hpp 
-#         PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/common/shader.hpp
+# TODO: Add samples that work
+# these samples won't work as is
+# add_executable(bgfxSample.bin ${CMAKE_CURRENT_SOURCE_DIR}/Sample/bgfxSample.cpp)
+# target_include_directories(bgfxSample.bin PUBLIC
+#   ${CMAKE_CURRENT_BINARY_DIR}
 # )
-target_link_libraries(bgfxSample.bin PUBLIC bgfxGWEN ${libs})
-# target_link_libraries(trianglegl ${CONAN_LIBS})
+# target_link_libraries(bgfxSample.bin PUBLIC bgfxGWEN ${libs})
+
 
 
 # Tests

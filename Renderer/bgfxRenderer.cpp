@@ -4,9 +4,13 @@
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
 #include "Gwen/WindowProvider.h"
-// https://github.com/bkaradzic/bgfx/discussions/2776
-#define ENTRY_CONFIG_IMPLEMENT_MAIN 0
-#include "entry/entry.h"
+#include <bx/file.h>
+
+#ifndef ENTRY_CONFIG_IMPLEMENT_DEFAULT_ALLOCATOR
+#	define ENTRY_CONFIG_IMPLEMENT_DEFAULT_ALLOCATOR 1
+#endif // ENTRY_CONFIG_IMPLEMENT_DEFAULT_ALLOCATOR
+
+// #include "entry/entry.h"
 /*
 #define D3DFVF_VERTEXFORMAT2D ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
@@ -30,6 +34,18 @@ namespace Gwen
 	        fseek(_file, pos, SEEK_SET);
 	        return size;
         }
+
+		#if ENTRY_CONFIG_IMPLEMENT_DEFAULT_ALLOCATOR
+			bx::AllocatorI* getDefaultAllocator()
+			{
+		BX_PRAGMA_DIAGNOSTIC_PUSH();
+		BX_PRAGMA_DIAGNOSTIC_IGNORED_MSVC(4459); // warning C4459: declaration of 's_allocator' hides global declaration
+		BX_PRAGMA_DIAGNOSTIC_IGNORED_CLANG_GCC("-Wshadow");
+				static bx::DefaultAllocator s_allocator;
+				return &s_allocator;
+		BX_PRAGMA_DIAGNOSTIC_POP();
+			}
+		#endif // ENTRY_CONFIG_IMPLEMENT_DEFAULT_ALLOCATOR
 
         static const bgfx::Memory* load(const char* _filePath)
         {
@@ -58,6 +74,9 @@ namespace Gwen
             m_width = 1280;
 	        m_height = 720;
             m_currentTexture.idx = BGFX_INVALID_HANDLE;// bgfx::kInvalidHandle;           
+			g_allocator = getDefaultAllocator();
+			s_fileReader = BX_NEW(g_allocator, bx::FileReader);
+			s_fileWriter = BX_NEW(g_allocator, bx::FileWriter);
 
             // Load vertex shader.
             const bgfx::Memory* mem;
@@ -104,6 +123,11 @@ namespace Gwen
 
 		bgfxRenderer::~bgfxRenderer()
 		{
+			bx::deleteObject(g_allocator, s_fileReader);
+			s_fileReader = NULL;
+
+			bx::deleteObject(g_allocator, s_fileWriter);
+			s_fileWriter = NULL;
             bgfx::destroy(m_flatProgram);
             bgfx::destroy(m_texturedProgram);
 		}
@@ -697,7 +721,7 @@ namespace Gwen
 		// These are borrowed from bgfx examples common bgfx_utils.cpp
 		const bgfx::ShaderHandle bgfxRenderer::loadShader(const char* _name)
 		{
-			return loadShader(entry::getFileReader(), _name);
+			return loadShader(s_fileReader, _name);
 		}
 
         const bgfx::Memory* bgfxRenderer::loadTexture(const char* _name)
